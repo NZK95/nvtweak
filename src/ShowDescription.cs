@@ -6,8 +6,6 @@ namespace nvtweak
     {
         private void ShowDescriptionButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchButton_Click(sender, e);
-
             if (NVIDIA.IsDwordNameEmpty() || NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName) == -1)
             {
                 MessageBox.Show("Invalid data.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);

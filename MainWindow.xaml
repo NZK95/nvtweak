@@ -309,7 +309,9 @@ Click="SetAllToValueButton_Click" Grid.ColumnSpan="2" Grid.Column="3"/>
                 </Canvas>
             </TabItem>
 
-            <TabItem Header="ABOUT"/>
+            <TabItem Header="ABOUT">
+                <TextBlock><Hyperlink NavigateUri="https://github.com/NZK95" RequestNavigate="Hyperlink_RequestNavigate">NZK95</Hyperlink></TextBlock>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
