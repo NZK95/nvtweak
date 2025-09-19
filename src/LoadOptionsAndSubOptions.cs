@@ -44,6 +44,8 @@ namespace nvtweak
                 ElaborateCaseWithNoOptionsFound(index);
                 MessageBox.Show("No options with bit-fields found for this DWORD.\nYou can check the description and the matched lines in TreeView.", "No Options", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else if (options.Values.All(x => x.Count == 0))
+                ElaborateCaseWithNoSubOptionsFound(options, index);
             else
                 ElaborateCaseWithOptions(options);
         }
@@ -70,6 +72,14 @@ namespace nvtweak
                     }
                 }
             }
+        }
+
+        private void ElaborateCaseWithNoSubOptionsFound(Dictionary<string, List<string>> options, int index)
+        {
+            SetAllToValueButton.Visibility = Visibility.Visible;
+            SetAllToValueTextBox.Visibility = Visibility.Visible;
+
+            ElaborateCaseWithNoOptionsFound(index);
         }
 
         private void ElaborateCaseWithOptions(Dictionary<string, List<string>> options)

@@ -47,7 +47,7 @@ namespace nvtweak
                 options[optionKey] = valueLines;
             }
 
-            options =  RemoveKeysWithFewestOptions(options);
+            options = RemoveKeysWithFewestOptions(options);
             return options;
         }
 
@@ -145,7 +145,7 @@ namespace nvtweak
         {
             var index = GetDwordLineIndex(dwordName);
             var bitRanges = ExtractOptions(index).Keys.Select(x => ExtractBitRange(x)).ToList();
-            var values = ExtractOptions(index).Values.Select(x =>( x.Count >= 1) ? ExtractSubOptionValue(x[x.Count - 1]) : null).ToList();
+            var values = ExtractOptions(index).Values.Select(x => (x.Count >= 1) ? ExtractSubOptionValue(x[x.Count - 1]) : null).ToList();
 
             var result = BitmaskCalculator.CalculateBitMask(bitRanges.Count, values, bitRanges);
 
@@ -169,8 +169,16 @@ namespace nvtweak
         {
             var currentDwordBase = $"#define {ExtractDwordDefinitionName(FileLines[indexOfLine])}";
 
-            bool IsRelevantDefinition(string line) =>
-                line.StartsWith(currentDwordBase);
+            bool IsRelevantDefinition(string line)
+            {
+                if (!line.StartsWith(currentDwordBase))
+                {
+                    line = line.Contains("NV_REG") ? line.Replace("NV_REG", "NV_REG_STR") : line.Replace("NV_REG_STR", "NV_REG");
+                    return line.StartsWith(currentDwordBase);
+                }
+
+                return true;
+            }
 
             List<string> ExtractDescriptionLines(int startIndex, int direction)
             {
@@ -180,14 +188,10 @@ namespace nvtweak
                 {
                     var line = FileLines[i];
 
-                    if (IsLineADwordDefinition(line) || IsLineAnOptionDefinition(line))
-                    {
-                        if (!IsRelevantDefinition(line))
-                            break;
-                    }
+                    if (line.StartsWith("#define") && !IsRelevantDefinition(line))
+                        break;
 
-                    if (IsLineAComment(line))
-                        descriptionLines.Add(line);
+                    descriptionLines.Add(line);
                 }
 
                 return descriptionLines;
@@ -202,8 +206,16 @@ namespace nvtweak
         public static bool IsLineADwordDefinition(string line) =>
             line.TrimStart().StartsWith("#define") && Regex.IsMatch(line, @"""[^""]+""");
 
-        private static bool IsLineAnOptionDefinition(string line, string definitionName = "") =>
-            line.TrimStart().StartsWith("#define " + definitionName) && Regex.IsMatch(line, @"\b\d+:\d+\b");
+        private static bool IsLineAnOptionDefinition(string line, string definitionName = "")
+        {
+            if (!line.TrimStart().StartsWith("#define " + definitionName))
+            {
+                definitionName = definitionName.Contains("NV_REG_STR") ? definitionName.Replace("NV_REG_STR", "NV_REG") : definitionName.Replace("NV_REG", "NV_REG_STR");
+                return line.TrimStart().StartsWith("#define " + definitionName) && Regex.IsMatch(line, @"\b\d+:\d+\b");
+            }
+
+            return Regex.IsMatch(line, @"\b\d+:\d+\b");
+        }
 
         public static bool IsDwordNameEmpty() =>
             string.IsNullOrWhiteSpace(DWORDName);

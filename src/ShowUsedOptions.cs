@@ -6,6 +6,7 @@ namespace nvtweak
     {
         private void ShowOptionsUsed_Click(object sender, RoutedEventArgs e)
         {
+            OptionsTextBox.Text = null;
             var name = (DwordNameTextBox.Text == "Name") ? string.Empty : DwordNameTextBox.Text;
             var value = (DwordValueTextBox.Text == "Value") ? string.Empty : DwordValueTextBox.Text;
 
@@ -34,8 +35,16 @@ namespace nvtweak
                 return;
             }
 
-            var decimalUserValue = Convert.ToInt32(BitmaskCalculator.ConvertToBinary(value), 2);
-            var decimalMaxValue = Convert.ToInt32(BitmaskCalculator.ConvertToBinary(string.IsNullOrWhiteSpace(MaxValueTextBox.Text) ? NVIDIA.GetMaxValue(name) : MaxValueTextBox.Text), 2);
+            var options = NVIDIA.ExtractOptions(NVIDIA.GetDwordLineIndex(name));
+
+            if (options.Keys.Count == 0)
+            {
+                ElaborateCaseWhenKeysCountIsZero(index, value, NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]));
+                return;
+            }
+
+            var decimalUserValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(value), 2);
+            var decimalMaxValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(NVIDIA.GetMaxValue(name)), 2);
 
             if (decimalUserValue > decimalMaxValue)
             {
@@ -44,8 +53,6 @@ namespace nvtweak
             }
 
             var optionsUsed = new List<string>();
-            var options = NVIDIA.ExtractOptions(NVIDIA.GetDwordLineIndex(name));
-
             var bitRanges = GetBitRangesFromListOfOptions(options.Keys.ToList());
             var hexValues = GetHexValuesFromBitmaskAndBitRanges(bitRanges);
 
@@ -58,7 +65,7 @@ namespace nvtweak
                     {
                         var bitRange = NVIDIA.ExtractBitRange(key);
                         var line = key[8..].Replace(bitRange, string.Empty).Trim();
-                        line += $" ({bitRange}) - {subOption[1..].Trim()}";
+                        line += $" ({bitRange}) - {subOption.Trim()}";
                         optionsUsed.Add(line);
                     }
                 }
@@ -71,6 +78,17 @@ namespace nvtweak
 
         }
 
+        private void ElaborateCaseWhenKeysCountIsZero(int index,string value,string dwordDefinitionName)
+        {
+            for (int i = index; i < NVIDIA.FileLines.Length; i++)
+            {
+                if (NVIDIA.FileLines[i].StartsWith($"#define {dwordDefinitionName}") && NVIDIA.FileLines[i].Contains(value))
+                {
+                    OptionsTextBox.Text = NVIDIA.FileLines[i];
+                    break;
+                }
+            }
+        }
         private List<string> GetBitRangesFromListOfOptions(List<string> options) =>
             options.Select(x => NVIDIA.ExtractBitRange(x)).ToList();
 

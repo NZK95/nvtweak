@@ -129,12 +129,21 @@
                                 <TextBlock Text="Max value:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Top" Margin="10,12,10,0"/>
                                 <TextBox x:Name="MaxValueTextBox"
                                  Height="35"
+                                 Text="0x00000000"
                                  Width="320"
                                  Background="#111111"
                                  Foreground="White"
                                  BorderBrush="#333333"
                                  IsReadOnly="True"
                                  Grid.Row="3" Grid.Column="1" Margin="0,5,0,0"/>
+
+                                <TextBox x:Name="SetAllToValueTextBox"
+                                         MaxWidth="140"
+                                         Visibility="Hidden"
+  Background="#111111"
+  Foreground="White"
+  BorderBrush="#333333"
+  Grid.Row="4" Grid.Column="4" Margin="73,7,10,0"/>
 
                                 <TextBlock Text="Hex:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
                                 <TextBox x:Name="HexResultTextBox"
@@ -155,6 +164,16 @@
                             BorderBrush="#333333"
                             Grid.Row="0" Grid.Column="3" Margin="11,2,10,2"
                             Click="SearchButton_Click"/>
+
+
+                                <Button x:Name="SetAllToValueButton"
+                                        Visibility="Hidden"
+Content="Set all options to value"
+Background="#111111"
+Foreground="White"
+BorderBrush="#333333"
+Grid.Row="4" Margin="11,7,164,0"
+Click="SetAllToValueButton_Click" Grid.ColumnSpan="2" Grid.Column="3"/>
 
                                 <Button x:Name="ApplyToRegistryButton"
                             Height="36"

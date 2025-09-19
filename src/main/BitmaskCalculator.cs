@@ -43,26 +43,26 @@ namespace nvtweak
 
         public static string ConvertToBinary(string input)
         {
-            int number;
+            ulong number;
 
             if (IsBinary(input)) return input.StartsWith("0b") ? input.Substring(2) : input;
 
-            else if (IsDecimal(input)) number = int.Parse(input);
+            else if (IsDecimal(input)) number = ulong.Parse(input);
 
             else if (IsHex(input))
             {
                 string hex = input.StartsWith("0x", StringComparison.OrdinalIgnoreCase) ? input.Substring(2) : input;
-                number = Convert.ToInt32(hex, 16);
+                number = Convert.ToUInt64(hex, 16);
             }
 
             else throw new FormatException("Unknown numeric system.");
 
-            return Convert.ToString(number, 2);
+            return Convert.ToString((long)number, 2);
         }
 
         public static string ConvertBinaryToHex(string binary)
         {
-            int decimalValue = Convert.ToInt32(binary, 2);
+            var decimalValue = Convert.ToUInt64(binary, 2);
             string hexValue = decimalValue.ToString("X");
             return "0x" + decimalValue.ToString("X8");
         }

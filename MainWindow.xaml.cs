@@ -65,5 +65,37 @@ namespace nvtweak
                 DwordValueTextBox.Foreground = Brushes.White;
             }
         }
+
+        private void SetAllToValueButton_Click(object sender, RoutedEventArgs e)
+        {
+            var valueToSet = SetAllToValueTextBox.Text;
+
+            if (!valueToSet.ToLower().Contains('x') || !valueToSet.ToLower().Equals("0x00000000") && !valueToSet.ToLower().Equals("0x00000001"))
+            {
+                MessageBox.Show("Invalid value", "Enter new value", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            foreach (var item in DwordTreeView.Items)
+            {
+                var bitRange = NVIDIA.ExtractBitRange(Convert.ToString(item));
+                if (!string.IsNullOrEmpty(bitRange))
+                    NVIDIA.ValuesWithBitRanges[bitRange] = valueToSet;
+            }
+
+            CalculateValueButton_Click(null, null);
+            MessageBox.Show("Setted all options to value", "Bitmask calculated", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ShowMaxValue()
+        {
+            var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
+
+            if (index != -1)
+            {
+                var binaryMaxValue = NVIDIA.GetMaxValue(NVIDIA.DWORDName);
+                MaxValueTextBox.Text = BitmaskCalculator.ConvertBinaryToHex(binaryMaxValue);
+            }
+        }
     }
 }

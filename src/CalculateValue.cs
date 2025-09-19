@@ -12,8 +12,8 @@ namespace nvtweak
             string completedBitmask = BitmaskCalculator.GetCompletedBitMask();
 
             BinaryResultTextBox.Text = completedBitmask;
-            DecimalResultTextBox.Text = Convert.ToString(Convert.ToInt32(BinaryResultTextBox.Text, 2));
-            HexResultTextBox.Text = "0x" + Convert.ToString(Convert.ToInt32(DecimalResultTextBox.Text).ToString("X8"));
+            DecimalResultTextBox.Text = Convert.ToString(Convert.ToUInt64(BinaryResultTextBox.Text, 2));
+            HexResultTextBox.Text = "0x" + Convert.ToString(Convert.ToUInt64(DecimalResultTextBox.Text).ToString("X8"));
         }
     }
 }

@@ -14,14 +14,7 @@ namespace nvtweak
             Description_Textbox.Text = string.Empty;
             NVIDIA.DWORDName = SearchBar.Text;
 
-            var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
-
-            if (index != -1)
-            {
-                var binaryMaxValue = NVIDIA.GetMaxValue(NVIDIA.DWORDName);
-                MaxValueTextBox.Text = BitmaskCalculator.ConvertBinaryToHex(binaryMaxValue);
-            }
-
+            ShowMaxValue();
             LoadOptionsAndSuboptionsInTreeView();
         }
     }
