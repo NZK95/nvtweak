@@ -19,7 +19,7 @@ namespace nvtweak
 
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Class\{4d36e968-e325-11ce-bfc1-08002be10318}\0000]";
             
-            string pathToSaveFile = @$"C:\Users\User\Desktop\EXPORTED_REGS.reg";
+            string pathToSaveFile = AppContext.BaseDirectory + "EXPORTED_REGS.reg";
             string dwordKeyName = NVIDIA.ExtractDwordKeyName(NVIDIA.FileLines[NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName)]);
             string dwordValueAssignment = $"\"{dwordKeyName}\"=dword:{HexResultTextBox.Text.Substring(2)}\n";
 

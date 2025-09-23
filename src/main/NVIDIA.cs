@@ -5,7 +5,7 @@ namespace nvtweak
 {
     internal class NVIDIA
     {
-        public static string FilePath { get; private set; } = @"C:\Users\User\Desktop\NEWERA\NVIDIA-DOC.txt";
+        public static string FilePath { get; private set; } = AppContext.BaseDirectory + "NVIDIA-DOCUMENTATION.txt";
         public static string[] FileLines { get; private set; } = File.ReadAllLines(FilePath);
         public static Dictionary<string, int> DwordLineIndexCache { get; private set; } = new();
         public static Dictionary<string, string> ValuesWithBitRanges { get; private set; } = new();
@@ -204,15 +204,12 @@ namespace nvtweak
 
         private static bool IsLineAnOptionDefinition(string line, string definitionName = "")
         {
-            var expression = "#define " + definitionName;
-            line = line.TrimStart();
-
-            if (!line.StartsWith(expression))
+            if (!line.TrimStart().StartsWith("#define " + definitionName))
             {
-                definitionName = (definitionName.Contains("NV_REG_STR")) ? definitionName.Replace("NV_REG_STR", "NV_REG")
+                definitionName = definitionName.Contains("NV_REG_STR") ? definitionName.Replace("NV_REG_STR", "NV_REG") 
                     : definitionName.Replace("NV_REG", "NV_REG_STR");
 
-                return line.StartsWith(expression) && Regex.IsMatch(line, @"\b\d+:\d+\b");
+                return line.TrimStart().StartsWith("#define " + definitionName) && Regex.IsMatch(line, @"\b\d+:\d+\b");
             }
 
             return Regex.IsMatch(line, @"\b\d+:\d+\b");

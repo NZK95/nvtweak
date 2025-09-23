@@ -9,7 +9,7 @@ namespace nvtweak
         {
             var printed = new HashSet<string>();
             var patternToMatch = SearchBar.Text;
-            var pathToFile = @"C:\Users\User\Desktop\NEWERA\NVIDIA-EXPORTED.txt";
+            var pathToFile = AppContext.BaseDirectory + "NVIDIA-EXPORTED-STRING.txt";
             string EXPORTED_DWORDS_FILE_TEMPLATE = $"{"DWORD_DEFINITION_NAME".PadRight(100)} DWORD_KEY_NAME\n\n";
 
             if (File.Exists(pathToFile) && File.ReadAllLines(pathToFile).Length > 0 && File.ReadAllLines(pathToFile)[0].StartsWith("DWORD_DEFINITION_NAME"))

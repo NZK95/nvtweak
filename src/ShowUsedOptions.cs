@@ -25,7 +25,7 @@ namespace nvtweak
                 return;
             }
 
-            if (!IsInputValueValid(name, value)) return;
+            if (!IsInputValueValid(value,name)) return;
 
             var optionsUsed = new List<string>();
             var bitRanges = ExtractBitRangesFromListOfOptions(options.Keys.ToList());
