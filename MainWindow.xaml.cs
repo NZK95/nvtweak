@@ -66,38 +66,6 @@ namespace nvtweak
             }
         }
 
-        private void SetAllToValueButton_Click(object sender, RoutedEventArgs e)
-        {
-            var valueToSet = SetAllToValueTextBox.Text;
-
-            if (!valueToSet.ToLower().Contains('x') || !valueToSet.ToLower().Equals("0x00000000") && !valueToSet.ToLower().Equals("0x00000001"))
-            {
-                MessageBox.Show("Invalid value", "Enter new value", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            foreach (var item in DwordTreeView.Items)
-            {
-                var bitRange = NVIDIA.ExtractBitRange(Convert.ToString(item));
-                if (!string.IsNullOrEmpty(bitRange))
-                    NVIDIA.ValuesWithBitRanges[bitRange] = valueToSet;
-            }
-
-            CalculateValueButton_Click(null, null);
-            MessageBox.Show("Setted all options to value", "Bitmask calculated", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void ShowMaxValue()
-        {
-            var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
-
-            if (index != -1)
-            {
-                var binaryMaxValue = NVIDIA.GetMaxValue(NVIDIA.DWORDName);
-                MaxValueTextBox.Text = BitmaskCalculator.ConvertBinaryToHex(binaryMaxValue);
-            }
-        }
-
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var psi = new ProcessStartInfo
@@ -107,6 +75,33 @@ namespace nvtweak
             };
 
             Process.Start(psi);
+        }
+
+        private void SetAllToValueButton_Click(object sender, RoutedEventArgs e)
+        {
+            var valueToSet = SetAllToValueTextBox.Text;
+
+            if (!Misc.IsDesiredValueInAcceptedRange(valueToSet.ToLower())) return;
+
+            foreach (var item in DwordTreeView.Items)
+            {
+                var bitRange = NVIDIA.ExtractBitRange(Convert.ToString(item));
+
+                if (!string.IsNullOrEmpty(bitRange))
+                    NVIDIA.ValuesWithBitRanges[bitRange] = valueToSet;
+            }
+
+            CalculateValueButton_Click(null, null);
+            MessageBox.Show("All options have been setted to desired value", "Bitmask calculated", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void DisplayDWORDMaxValue()
+        {
+            if (NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName) != -1)
+            {
+                var binaryMaxValue = BitmaskCalculator.GetMaxValue(NVIDIA.DWORDName);
+                MaxValueTextBox.Text = BitmaskCalculator.ConvertBinaryToHex(binaryMaxValue);
+            }
         }
     }
 }

@@ -7,56 +7,31 @@ namespace nvtweak
         private void ShowOptionsUsed_Click(object sender, RoutedEventArgs e)
         {
             OptionsTextBox.Text = null;
+
             var name = (DwordNameTextBox.Text == "Name") ? string.Empty : DwordNameTextBox.Text;
             var value = (DwordValueTextBox.Text == "Value") ? string.Empty : DwordValueTextBox.Text;
 
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(value))
-            {
-                MessageBox.Show("Please enter a valid DWORD name or value before proceeding.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            if (!Misc.IsDWORDNameEmpty(name)) return;
 
             var index = NVIDIA.GetDwordLineIndex(name);
 
-            if (index == -1)
-            {
-                for (int i = 0; i < NVIDIA.FileLines.Length; ++i)
-                {
-                    var line = NVIDIA.FileLines[i];
-
-                    if (line.Contains(name))
-                    {
-                        MessageBox.Show("The specified DWORD exists only in nvlddmkm.\nOften the value of dword can be 0x0 (Disable) / 0x1 (Enabled), and you can undestand it from the name of DWORD.", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-                }
-
-                MessageBox.Show("The specified DWORD was not found in the documentation.", "Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            if (!Misc.IsDWORDNameFound(index)) return;
 
             var options = NVIDIA.ExtractOptions(NVIDIA.GetDwordLineIndex(name));
 
-            if (options.Keys.Count == 0)
+            if (options.Keys.Count is 0)
             {
-                ElaborateCaseWhenKeysCountIsZero(index, value, NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]));
+                ElaborateCaseWhenKeysCountIsZero(index, value);
                 return;
             }
 
-            var decimalUserValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(value), 2);
-            var decimalMaxValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(NVIDIA.GetMaxValue(name)), 2);
-
-            if (decimalUserValue > decimalMaxValue)
-            {
-                MessageBox.Show("Invalid value.", "Invalid input", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            if (!IsInputValueValid(name, value)) return;
 
             var optionsUsed = new List<string>();
-            var bitRanges = GetBitRangesFromListOfOptions(options.Keys.ToList());
-            var hexValues = GetHexValuesFromBitmaskAndBitRanges(bitRanges);
-
+            var bitRanges = ExtractBitRangesFromListOfOptions(options.Keys.ToList());
+            var hexValues = ExtractHexValuesFromBitmaskAndBitRanges(bitRanges);
             var countForHexValues = 0;
+
             foreach (var key in options.Keys)
             {
                 foreach (var subOption in options[key])
@@ -64,35 +39,39 @@ namespace nvtweak
                     if (subOption.Contains(hexValues[countForHexValues], StringComparison.OrdinalIgnoreCase))
                     {
                         var bitRange = NVIDIA.ExtractBitRange(key);
+
                         var line = key[8..].Replace(bitRange, string.Empty).Trim();
                         line += $" ({bitRange}) - {subOption.Trim()}";
+
                         optionsUsed.Add(line);
                     }
                 }
+
                 ++countForHexValues;
             }
 
-            var result = string.Join("\n\n", optionsUsed);
-            OptionsTextBox.Text = result;
+            OptionsTextBox.Text = string.Join("\n\n", optionsUsed);
             MessageBox.Show("All options used are printed", "", MessageBoxButton.OK, MessageBoxImage.Information);
-
         }
 
-        private void ElaborateCaseWhenKeysCountIsZero(int index,string value,string dwordDefinitionName)
+        private void ElaborateCaseWhenKeysCountIsZero(int index, string value)
         {
+            var dwordDefinitionName = NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]);
+
             for (int i = index; i < NVIDIA.FileLines.Length; i++)
             {
-                if (NVIDIA.FileLines[i].StartsWith($"#define {dwordDefinitionName}") && NVIDIA.FileLines[i].Contains(value))
+                var line = NVIDIA.FileLines[i];
+                var expression = $"#define {dwordDefinitionName}";
+
+                if (line.StartsWith(expression) && line.Contains(value))
                 {
-                    OptionsTextBox.Text = NVIDIA.FileLines[i];
+                    OptionsTextBox.Text = line;
                     break;
                 }
             }
         }
-        private List<string> GetBitRangesFromListOfOptions(List<string> options) =>
-            options.Select(x => NVIDIA.ExtractBitRange(x)).ToList();
 
-        private List<string> GetHexValuesFromBitmaskAndBitRanges(List<string> bitRanges)
+        private List<string> ExtractHexValuesFromBitmaskAndBitRanges(List<string> bitRanges)
         {
             var userValue = DwordValueTextBox.Text;
             var binaryValue = BitmaskCalculator.ConvertToBinary(userValue);
@@ -120,5 +99,22 @@ namespace nvtweak
 
             return hexValues;
         }
+
+        private bool IsInputValueValid(string value, string DWORDName)
+        {
+            var decimalUserValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(value), 2);
+            var decimalMaxValue = Convert.ToUInt64(BitmaskCalculator.ConvertToBinary(BitmaskCalculator.GetMaxValue(DWORDName)), 2);
+
+            if (decimalUserValue > decimalMaxValue)
+            {
+                MessageBox.Show("Invalid value.", "Invalid input value", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private List<string> ExtractBitRangesFromListOfOptions(List<string> options) =>
+           options.Select(x => NVIDIA.ExtractBitRange(x)).ToList();
     }
 }

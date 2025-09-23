@@ -40,6 +40,7 @@ namespace nvtweak
                         continue;
 
                     string cleanValue = CleanValueLineFromCommentsAndBasePrefix(secondLine, DWORDDefinitionName);
+
                     if (!string.IsNullOrWhiteSpace(cleanValue))
                         valueLines.Add(cleanValue);
                 }
@@ -80,6 +81,61 @@ namespace nvtweak
                 options.Remove(key);
 
             return options;
+        }
+
+        public static int GetDwordLineIndex(string dwordName)
+        {
+            if (DwordLineIndexCache.TryGetValue(dwordName.ToLower(), out int cachedIndex))
+                return cachedIndex;
+
+            for (int i = 0; i < FileLines.Length; i++)
+            {
+                if (IsLineADwordDefinition(FileLines[i]) && ExtractDwordKeyName(FileLines[i]).Equals(dwordName, StringComparison.OrdinalIgnoreCase))
+                {
+                    DwordLineIndexCache[dwordName.ToLower()] = i;
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public static (List<string> bottomDescriptionLines, List<string> topDescriptionLines) GetDescription(int indexOfLine)
+        {
+            var currentDwordBase = $"#define {ExtractDwordDefinitionName(FileLines[indexOfLine])}";
+
+            bool IsRelevantDefinition(string line)
+            {
+                if (!line.StartsWith(currentDwordBase))
+                {
+                    line = line.Contains("NV_REG") ? line.Replace("NV_REG", "NV_REG_STR") : line.Replace("NV_REG_STR", "NV_REG");
+                    return line.StartsWith(currentDwordBase);
+                }
+
+                return true;
+            }
+
+            List<string> ExtractDescriptionLines(int startIndex, int direction)
+            {
+                var descriptionLines = new List<string>();
+
+                for (int i = startIndex; i >= 0 && i < FileLines.Length; i += direction)
+                {
+                    var line = FileLines[i];
+
+                    if (line.StartsWith("#define") && !IsRelevantDefinition(line))
+                        break;
+
+                    descriptionLines.Add(line);
+                }
+
+                return descriptionLines;
+            }
+
+            var bottom = ExtractDescriptionLines(indexOfLine + 1, +1);
+            var top = ExtractDescriptionLines(indexOfLine - 1, -1);
+
+            return (bottom, top);
         }
 
         public static string ExtractDwordKeyName(string line)
@@ -124,83 +180,23 @@ namespace nvtweak
 
         }
 
-        public static int GetDwordLineIndex(string dwordName)
-        {
-            if (DwordLineIndexCache.TryGetValue(dwordName.ToLower(), out int cachedIndex))
-                return cachedIndex;
-
-            for (int i = 0; i < FileLines.Length; i++)
-            {
-                if (IsLineADwordDefinition(FileLines[i]) && ExtractDwordKeyName(FileLines[i]).Equals(dwordName, StringComparison.OrdinalIgnoreCase))
-                {
-                    DwordLineIndexCache[dwordName.ToLower()] = i;
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
-        public static string GetMaxValue(string dwordName)
-        {
-            var index = GetDwordLineIndex(dwordName);
-            var bitRanges = ExtractOptions(index).Keys.Select(x => ExtractBitRange(x)).ToList();
-            var values = ExtractOptions(index).Values.Select(x => (x.Count >= 1) ? ExtractSubOptionValue(x[x.Count - 1]) : null).ToList();
-
-            var result = BitmaskCalculator.CalculateBitMask(bitRanges.Count, values, bitRanges);
-
-            return string.Join("", result.Reverse());
-        }
-
         public static string ExtractSubOptionValue(string definition)
         {
-            if (definition.StartsWith("#define"))
-                definition = definition[8..];
+            definition = (definition.StartsWith("#define")) ? definition[8..].Trim() : definition.Trim();
 
-            definition = definition.Trim();
             int spaceIndex = definition.IndexOf(' ');
-            if (spaceIndex >= 0)
-                definition = definition[(spaceIndex + 1)..].Trim();
+            definition = (spaceIndex >= 0) ? definition[(spaceIndex + 1)..].Trim() : definition;
 
             return definition.Trim().Trim('(', ')');
         }
 
-        public static (List<string> bottomDescriptionLines, List<string> topDescriptionLines) GetDescription(int indexOfLine)
+        public static bool DoesDWORDExistsInNvlddmkm()
         {
-            var currentDwordBase = $"#define {ExtractDwordDefinitionName(FileLines[indexOfLine])}";
+            foreach (var line in FileLines)
+                if (line.Contains(DWORDName))
+                    return true;
 
-            bool IsRelevantDefinition(string line)
-            {
-                if (!line.StartsWith(currentDwordBase))
-                {
-                    line = line.Contains("NV_REG") ? line.Replace("NV_REG", "NV_REG_STR") : line.Replace("NV_REG_STR", "NV_REG");
-                    return line.StartsWith(currentDwordBase);
-                }
-
-                return true;
-            }
-
-            List<string> ExtractDescriptionLines(int startIndex, int direction)
-            {
-                var descriptionLines = new List<string>();
-
-                for (int i = startIndex; i >= 0 && i < FileLines.Length; i += direction)
-                {
-                    var line = FileLines[i];
-
-                    if (line.StartsWith("#define") && !IsRelevantDefinition(line))
-                        break;
-
-                    descriptionLines.Add(line);
-                }
-
-                return descriptionLines;
-            }
-
-            var bottom = ExtractDescriptionLines(indexOfLine + 1, +1);
-            var top = ExtractDescriptionLines(indexOfLine - 1, -1);
-
-            return (bottom, top);
+            return false;
         }
 
         public static bool IsLineADwordDefinition(string line) =>
@@ -208,10 +204,15 @@ namespace nvtweak
 
         private static bool IsLineAnOptionDefinition(string line, string definitionName = "")
         {
-            if (!line.TrimStart().StartsWith("#define " + definitionName))
+            var expression = "#define " + definitionName;
+            line = line.TrimStart();
+
+            if (!line.StartsWith(expression))
             {
-                definitionName = definitionName.Contains("NV_REG_STR") ? definitionName.Replace("NV_REG_STR", "NV_REG") : definitionName.Replace("NV_REG", "NV_REG_STR");
-                return line.TrimStart().StartsWith("#define " + definitionName) && Regex.IsMatch(line, @"\b\d+:\d+\b");
+                definitionName = (definitionName.Contains("NV_REG_STR")) ? definitionName.Replace("NV_REG_STR", "NV_REG")
+                    : definitionName.Replace("NV_REG", "NV_REG_STR");
+
+                return line.StartsWith(expression) && Regex.IsMatch(line, @"\b\d+:\d+\b");
             }
 
             return Regex.IsMatch(line, @"\b\d+:\d+\b");
@@ -220,20 +221,21 @@ namespace nvtweak
         public static bool IsDwordNameEmpty() =>
             string.IsNullOrWhiteSpace(DWORDName);
 
-        public static bool AreThereAtLeastOneOptionSelected() =>
-            ValuesWithBitRanges.Count > 0;
-
         public static bool IsLineFromAnotherDWORD(string line, string baseName) =>
             IsLineADwordDefinition(line) && ExtractDwordDefinitionName(line) != baseName;
 
         public static bool IsLineAComment(string line) =>
           line.StartsWith('/') || line.StartsWith("/*") || line.StartsWith('*') || line.StartsWith("//") || line.StartsWith("*/") || line.StartsWith(" *") || line.StartsWith(" /");
 
+        public static bool AreThereAtLeastOneOptionSelected() =>
+           ValuesWithBitRanges.Count > 0;
+
         private static bool BelongsToBaseDword(int index, string baseDWORDName) => baseDWORDName == ExtractDwordKeyByOption(index);
 
         private static string CleanKeyLineFromComments(string line)
         {
             int commentIndex = line.IndexOf('/');
+
             if (commentIndex != -1)
                 line = line.Substring(0, commentIndex);
 
@@ -244,10 +246,9 @@ namespace nvtweak
         {
             line = CleanKeyLineFromComments(line);
 
-            if (line.Length < 8)
-                return string.Empty;
-
-            return line.Substring(8).Replace(baseName, " ").Trim();
+            return (line.Length) < 8 ? string.Empty
+                : line.Substring(8).Replace(baseName, " ").Trim();
         }
+       
     }
 }

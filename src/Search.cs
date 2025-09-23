@@ -14,7 +14,7 @@ namespace nvtweak
             Description_Textbox.Text = string.Empty;
             NVIDIA.DWORDName = SearchBar.Text;
 
-            ShowMaxValue();
+            DisplayDWORDMaxValue();
             LoadOptionsAndSuboptionsInTreeView();
         }
     }

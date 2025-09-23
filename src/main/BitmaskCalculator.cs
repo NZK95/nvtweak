@@ -41,13 +41,26 @@ namespace nvtweak
             return chars;
         }
 
+        public static string GetMaxValue(string dwordName)
+        {
+            var index = NVIDIA.GetDwordLineIndex(dwordName);
+            var bitRanges = NVIDIA.ExtractOptions(index).Keys.Select(x => NVIDIA.ExtractBitRange(x)).ToList();
+            var values = NVIDIA.ExtractOptions(index).Values.Select(x => (x.Count >= 1) ? NVIDIA.ExtractSubOptionValue(x[x.Count - 1]) : null).ToList();
+
+            var result = CalculateBitMask(bitRanges.Count, values, bitRanges);
+
+            return string.Join("", result.Reverse());
+        }
+
         public static string ConvertToBinary(string input)
         {
             ulong number;
 
-            if (IsBinary(input)) return input.StartsWith("0b") ? input.Substring(2) : input;
+            if (IsBinary(input))
+                return input.StartsWith("0b") ? input.Substring(2) : input;
 
-            else if (IsDecimal(input)) number = ulong.Parse(input);
+            else if (IsDecimal(input))
+                number = ulong.Parse(input);
 
             else if (IsHex(input))
             {

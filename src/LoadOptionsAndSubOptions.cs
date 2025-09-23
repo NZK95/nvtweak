@@ -7,30 +7,11 @@ namespace nvtweak
     {
         public void LoadOptionsAndSuboptionsInTreeView()
         {
-            if (NVIDIA.IsDwordNameEmpty())
-            {
-                MessageBox.Show("Please enter a valid DWORD name before proceeding.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            if (!Misc.IsDWORDNameEmpty(NVIDIA.DWORDName)) return;
 
             var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
 
-            if (index == -1)
-            {
-                for (int i = 0; i < NVIDIA.FileLines.Length; ++i)
-                {
-                    var line = NVIDIA.FileLines[i];
-
-                    if (line.Contains(NVIDIA.DWORDName))
-                    {
-                        MessageBox.Show("The specified DWORD exists only in nvlddmkm.\nOften the value of dword can be 0x0 (Disable) / 0x1 (Enabled), and you can undestand it from the name of DWORD.", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-                }
-
-                MessageBox.Show("The specified DWORD was not found in the documentation.", "Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            if (!Misc.IsDWORDNameFound(index)) return;
 
             DwordTreeView.Items.Clear();
 
@@ -39,7 +20,7 @@ namespace nvtweak
 
             var options = NVIDIA.ExtractOptions(index);
 
-            if (options.Keys.Count == 0)
+            if (options.Keys.Count is 0)
             {
                 ElaborateCaseWithNoOptionsFound(index);
                 MessageBox.Show("No options with bit-fields found for this DWORD.\nYou can check the description and the matched lines in TreeView.", "No Options", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -53,7 +34,7 @@ namespace nvtweak
 
         private void ElaborateCaseWithNoOptionsFound(int index)
         {
-            string prefix = "#define " + NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]) + "_";
+            var prefix = "#define " + NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]) + "_";
             HashSet<string> printed = new();
 
             for (int i = index; i < NVIDIA.FileLines.Length; i++)
