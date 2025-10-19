@@ -1,51 +1,57 @@
-# Для чего был создан **nvtweak**?
+# What is **nvtweak** for?
 
-Драйверы видеокарт NVIDIA содержат множество параметров, управляемых через реестр Windows. Они могут быть по пути либо в 0000, либо в nvlddmkm. Многие из этих параметров — **скрытые** и недоступны для редактирования без стороннего софта.
+NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
+Most of them are **hidden** and cannot be modified without external tools.
 
-Однако даже если удаётся получить доступ к именам этих параметров (DWORD), возникает вторая проблема — правильная установка их значений:
+Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set.
 
- Некоторые параметры содержат в имени слова `Enable`/`Disable`, и для них всё просто: используются значения `0x00000000` (выключено) и `0x00000001` (включено).
- В остальных случаях требуется работа с **битовыми полями** и **битовыми масками**, информация о которых берётся из слитой документации NVIDIA.
+Some parameters include the words `Enable` or `Disable` in their names, and those are simple:  
+`0x00000000` means *disabled*, and `0x00000001` means *enabled*.
 
-- **Битовые поля (bitfields)** — диапазон битов внутри DWORD, например `1:0` означает, что используются биты 0 и 1 (всего 2 бита).
-- **Битовая маска (bitmask)** — итоговое значение DWORD в двоичном виде, например:  
-  `0000 0000 0000 0000 0000 0000 0000 1111`. <br>
+But others use **bitfields** and **bitmasks**, information about which comes from leaked NVIDIA documentation.
 
- Что бы рассчитать битмаску, нужно приложить время, nvtweak позволяет это все автоматизировать, путем парсинга документации, позволяя расчитывать значение для двордов и устанавливать его, очень легко и быстро. Кроме этого, nvtweak предоставляет множество функций, для работы с документацией NVIDIA и двордов.
- 
-# Важно
-- В **nvlddmkm**, в отличие от **0000**, битфилдов нет. Там используются только DWORD-параметры в формате Enable/Disable (как указано выше). Хотя и для **0000** встречаются такие же ситуации.  
-- Для входных пользовательских данных **всегда** используется шестнадцатеричная система счисления. Пример: `0x00000001`.  
-- Для DWORD-значений в **nvlddmkm** вычисление значения не производится по причинам, описанным выше.  
+- **Bitfields** — a range of bits inside a DWORD. For example, `1:0` means bits 0 and 1 (two bits total).  
+- **Bitmask** — the resulting binary value of a DWORD, e.g.  
+  `0000 0000 0000 0000 0000 0000 0000 1111`.  
 
-# Как использовать
-В верхнем текстовом поле введите имя DWORD-параметра и нажмите **Search**. Если параметр присутствует в документации, возможны три варианта:  
-
-1. **Все параметры и подпараметры найдены.**  
-   Выберите интересующие вас параметры и в конце нажмите **Calculate**.  
-
-2. **Параметры найдены, но без подпараметров.**  
-   Это означает, что значение всех параметров этого DWORD может быть только `0` или `1`.  
-   В этом случае появится специальный раздел, где можно назначить значение сразу всем параметрам, и получить готовое значение.
-
-3. **Параметров нет.**  
-   Это может означать:  
-   - баг или недоработку в nvtweak,  
-   - отсутствие информации в документации.  
-
-   В таком случае можно только просмотреть описание DWORD и задать значение вручную.  
-   Если DWORD найден в **nvlddmkm**, будет показано соответствующее окно.  
-
-# Другие функции
-- **Apply to registry** — применяет значение к выбранному DWORD и записывает его в реестр.  
-- **Show Description** — показывает описание DWORD в нижнем текстовом поле.  
-  Из-за особенностей документации NVIDIA (описание может находиться как выше, так и ниже), выводятся оба варианта, и только один из них будет верным. Это легко понять при просмотре.  
-- **Save to .reg file** — сохраняет DWORD со значением в `.reg`-файл в папке с nvtweak. Его позже можно применить вручную.  
-- **Options from value** — отображает параметры и подпараметры, использованные для конкретного значения.  
-- **Export dwords from documentation** — сохраняет в текстовый файл все упоминания выбранного DWORD из документации.
-
-## Устранение неполадок
-Если вы столкнулись с ошибками - сообщите о проблеме через систему отслеживания ошибок.
+Calculating a bitmask manually takes time. `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically.  
+It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently.
 
 
+# Important
+- In **nvlddmkm**, unlike **0000**, there are no bitfields — only simple DWORD parameters using the Enable/Disable format mentioned above.  
+  Still, some **0000** parameters can behave the same way.  
+- All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
+- For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
 
+# How to use it
+Type the name of a DWORD parameter in the upper field and press **Search**.  
+If the parameter exists in the documentation, one of three outcomes is possible:
+
+1. **All parameters and sub‑parameters found**  
+   Choose the ones you need and click **Calculate**.
+
+2. **Parameters found but no sub‑parameters**  
+   That means this DWORD only supports values `0` or `1`.  
+   You’ll see a section that lets you assign the same value to all parameters and get the resulting DWORD value.
+
+3. **Parameter not found**  
+   That could mean:  
+   - a bug or missing feature in `nvtweak`, or  
+   - missing info in the documentation.  
+     
+   In that case, you can only view the description and enter a value manually.  
+   If the DWORD belongs to **nvlddmkm**, the corresponding window will appear.
+
+
+# Other features
+- **Apply to registry** — writes the calculated value directly to the Windows registry.  
+- **Show Description** — shows the parameter’s description in the lower text area.  
+  Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
+- **Save to .reg file** — saves the DWORD and its value into a `.reg` file in the nvtweak folder. You can apply it later manually.  
+- **Options from value** — displays which bitfields and flags were used to produce a specific value.  
+- **Export dwords from documentation** — saves all references of a selected DWORD into a text file for analysis.
+
+
+## Troubleshooting
+If you encounter bugs or unexpected behavior, please report them through the issue tracker.
