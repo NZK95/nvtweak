@@ -1,4 +1,5 @@
 # nvtweak
+[![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
 
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
 Most of them are **hidden** and cannot be modified without external tools.
