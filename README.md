@@ -45,8 +45,8 @@ If the parameter exists in the documentation, one of three outcomes is possible:
 
 
 ## Features
-- **Apply to registry** — writes the calculated value directly to the Windows registry.  
-- **Show Description** — shows the parameter’s description in the lower text area.  
+ **Apply to registry** — writes the calculated value directly to the Windows registry.  
+ **Show Description** — shows the parameter’s description in the lower text area.  
   Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
 - **Save to .reg file** — saves the DWORD and its value into a `.reg` file in the nvtweak folder. You can apply it later manually.  
 - **Options from value** — displays which bitfields and flags were used to produce a specific value.  
