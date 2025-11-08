@@ -18,11 +18,11 @@ Calculating a bitmask manually takes time. `nvtweak` automates this by parsing t
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently.
 
 
-> ## Important
->- In **nvlddmkm**, unlike **0000**, there are no bitfields — only simple DWORD parameters using the Enable/Disable format mentioned above.  
->  Still, some **0000** parameters can behave the same way.  
->- All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
->- For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
+> ### Important
+> In **nvlddmkm**, unlike **0000**, there are no bitfields — only simple DWORD parameters using the Enable/Disable format mentioned above.  
+> Still, some **0000** parameters can behave the same way.  
+> All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
+> For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
 
 # How to use it
 Type the name of a DWORD parameter in the upper field and press **Search**.  
