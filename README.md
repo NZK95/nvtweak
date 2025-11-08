@@ -54,4 +54,4 @@ If the parameter exists in the documentation, one of three outcomes is possible:
 
 
 ## Troubleshooting
-If you encounter bugs or unexpected behavior, please report them through the issue tracker.
+If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
