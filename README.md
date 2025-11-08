@@ -1,4 +1,4 @@
-# What is **nvtweak** for?
+# nvtweak
 
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
 Most of them are **hidden** and cannot be modified without external tools.
@@ -24,7 +24,7 @@ It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs
 > All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
 > For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
 
-# How to use it
+# Usage
 Type the name of a DWORD parameter in the upper field and press **Search**.  
 If the parameter exists in the documentation, one of three outcomes is possible:
 
@@ -44,7 +44,7 @@ If the parameter exists in the documentation, one of three outcomes is possible:
    If the DWORD belongs to **nvlddmkm**, the corresponding window will appear.
 
 
-# Other features
+# Features
 - **Apply to registry** — writes the calculated value directly to the Windows registry.  
 - **Show Description** — shows the parameter’s description in the lower text area.  
   Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
