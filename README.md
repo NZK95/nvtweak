@@ -58,6 +58,9 @@ If the parameter exists in the documentation, one of three outcomes is possible:
 - **Options from value** — displays which bitfields and flags were used to produce a specific value.  
 - **Export dwords from documentation** — saves all references of a selected DWORD into a text file for analysis.
 
+## Resources
+[![BITFIELDS](https://en.wikipedia.org/wiki/Bit_field)
+[![NVIDIA LEAK](magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=integdev_gpu_drv.rar&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.opentrackr.org:1337/announce)
 
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
