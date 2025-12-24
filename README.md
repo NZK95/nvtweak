@@ -6,21 +6,11 @@
 > This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
 > You use this program at your own risk. <br>
 
+# Introduction
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
 Most of them are **hidden** and cannot be modified without external tools.
-
-Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set.
-
-Some parameters include the words `Enable` or `Disable` in their names, and those are simple:  
-`0x00000000` means *disabled*, and `0x00000001` means *enabled*.
-
-But others use **bitfields** and **bitmasks**, information about which comes from leaked NVIDIA documentation.
-
-- **Bitfields** — a range of bits inside a DWORD. For example, `1:0` means bits 0 and 1 (two bits total).  
-- **Bitmask** — the resulting binary value of a DWORD, e.g.  
-  `0000 0000 0000 0000 0000 0000 0000 1111`.  
-
-Calculating a bitmask manually takes time. `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically.  
+Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time.
+`nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically.  
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently.
 
 > ### Important
