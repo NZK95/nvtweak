@@ -29,7 +29,7 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 - DWORD analysis — extract all references to specific parameters
 
 ## Usage
-1. Enter the `DWORD` parameter name in the search field
+1. Enter the DWORD parameter name in the search field
 2. Click **Search** to query the documentation database
 3. Interpret results based on parameter type:
 
@@ -51,3 +51,6 @@ If you encounter bugs or unexpected behavior, please report them through the [is
 
 ## Credits
 [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
