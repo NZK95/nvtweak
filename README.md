@@ -1,7 +1,7 @@
 # nvtweak
 [![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
 
-> ## Disclaimer
+> ### Disclaimer
 > The author is not responsible for any possible damage caused to hardware as a result of using this project. <br>
 > This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
 > You use this program at your own risk. <br>
