@@ -7,26 +7,26 @@
 > You use this program at your own risk. <br>
 
 # Introduction
-NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
-Most of them are **hidden** and cannot be modified without external tools.
-Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time.
-`nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically.  
-It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently.
+NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`. <br>
+Most of them are **hidden** and cannot be modified without external tools. <br>
+Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time. <br>
+`nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically. <br>
+It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently. <br>
 
-> ### Important
-> In **nvlddmkm**, unlike **0000**, there are no bitfields — only simple DWORD parameters using the Enable/Disable format mentioned above.  
-> Still, some **0000** parameters can behave the same way.  
-> All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
-> For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
+### Registry Location Differences
+- **0000 branch**: Contains both simple flags and complex bitfield parameters
+- **nvlddmkm branch**: Contains only binary Enable/Disable parameters
 
+### Input Format
+All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x00000001`).
 
 ## Features
-- **Apply to registry** — writes the calculated value directly to the Windows registry.
-- **Show Description** — shows the parameter’s description in the lower text area.  
-  Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
-- **Save to .reg file** — saves the DWORD and its value into a `.reg` file in the nvtweak folder. You can apply it later manually.  
-- **Options from value** — displays which bitfields and flags were used to produce a specific value.  
-- **Export dwords from documentation** — saves all references of a selected DWORD into a text file for analysis.
+- Automated value calculation from bitfield specifications
+- Registry integration with direct write capability
+- Documentation browser for parameter descriptions
+- Reverse engineering — reconstruct bitfield configuration from existing values
+- Export functionality — generate `.reg` files for batch deployment
+- DWORD analysis — extract all references to specific parameters
 
 ## Usage
 Type the name of a DWORD parameter in the upper field and press **Search**.  
