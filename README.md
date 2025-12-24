@@ -13,11 +13,11 @@ Even if you manage to find the names of those parameters (DWORD), there’s anot
 `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically. <br>
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently. <br>
 
-### Registry Location Differences
+## Registry Location Differences
 - **0000 branch**: Contains both simple flags and complex bitfield parameters
 - **nvlddmkm branch**: Contains only binary Enable/Disable parameters
 
-### Input Format
+## Input Format
 All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x00000001`).
 
 ## Features
@@ -29,24 +29,22 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 - DWORD analysis — extract all references to specific parameters
 
 ## Usage
-Type the name of a DWORD parameter in the upper field and press **Search**.  
-If the parameter exists in the documentation, one of three outcomes is possible:
+1. Enter the `DWORD` parameter name in the search field
+2. Click **Search** to query the documentation database
+3. Interpret results based on parameter type:
 
-1. **All parameters and sub‑parameters found**  
-   Choose the ones you need and click **Calculate**.
+#### Case 1: Complex Bitfield Parameter
+- Select desired bitfield options from the presented list
+- Click **Calculate** to generate the hexadecimal value
 
-2. **Parameters found but no sub‑parameters**  
-   That means this DWORD only supports values `0` or `1`.  
-   You’ll see a section that lets you assign the same value to all parameters and get the resulting DWORD value.
+#### Case 2: Binary Flag Parameter
+- Only values `0x00000000` and `0x00000001` are valid
+- Use the provided interface to set all flags uniformly
 
-3. **Parameter not found**  
-   That could mean:  
-   - a bug or missing feature in `nvtweak`, or  
-   - missing info in the documentation.  
-     
-   In that case, you can only view the description and enter a value manually.  
-   If the DWORD belongs to **nvlddmkm**, the corresponding window will appear.
-
+#### Case 3: Undocumented Parameter
+- Parameter exists in registry but lacks documentation
+- Manual value entry required
+- Use **Show Description** to view context (if available)
 
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
