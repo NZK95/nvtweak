@@ -21,12 +21,15 @@ It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs
 All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x00000001`).
 
 ## Features
-- Automated value calculation from bitfield specifications
-- Registry integration with direct write capability
-- Documentation browser for parameter descriptions
-- Reverse engineering — reconstruct bitfield configuration from existing values
-- Export functionality — generate `.reg` files for batch deployment
-- DWORD analysis — extract all references to specific parameters
+| Feature                                           | Description                                                        |
+|---------------------------------------------------|--------------------------------------------------------------------|
+| **Automated Value Calculation**                   | Automatically calculate values based on bitfield specifications.   |
+| **Registry Integration with Direct Write**        | Directly write to registry with integration capabilities.         |
+| **Documentation Browser for Parameter Descriptions** | Allows browsing of documentation related to parameter descriptions.|
+| **Reverse Engineering**                           | Reconstruct bitfield configuration from existing values.          |
+| **Export Functionality**                          | Generate .reg files for batch deployment.                         |
+| **DWORD Analysis**                                | Extract all references to specific parameters in DWORD format.    |
+
 
 ## Usage
 1. Enter the DWORD parameter name in the search field
