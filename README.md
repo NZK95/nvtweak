@@ -29,6 +29,15 @@ It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs
 > All user input must be in **hexadecimal** format, e.g. `0x00000001`.  
 > For DWORDs found under **nvlddmkm**, value computation is not performed for the reasons explained above.  
 
+
+## Features
+- **Apply to registry** — writes the calculated value directly to the Windows registry.
+- **Show Description** — shows the parameter’s description in the lower text area.  
+  Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
+- **Save to .reg file** — saves the DWORD and its value into a `.reg` file in the nvtweak folder. You can apply it later manually.  
+- **Options from value** — displays which bitfields and flags were used to produce a specific value.  
+- **Export dwords from documentation** — saves all references of a selected DWORD into a text file for analysis.
+
 ## Usage
 Type the name of a DWORD parameter in the upper field and press **Search**.  
 If the parameter exists in the documentation, one of three outcomes is possible:
@@ -49,16 +58,8 @@ If the parameter exists in the documentation, one of three outcomes is possible:
    If the DWORD belongs to **nvlddmkm**, the corresponding window will appear.
 
 
-## Features
-- **Apply to registry** — writes the calculated value directly to the Windows registry.
-- **Show Description** — shows the parameter’s description in the lower text area.  
-  Due to how NVIDIA docs are structured, the description might appear either above or below the parameter. Both are shown; one of them will make sense.  
-- **Save to .reg file** — saves the DWORD and its value into a `.reg` file in the nvtweak folder. You can apply it later manually.  
-- **Options from value** — displays which bitfields and flags were used to produce a specific value.  
-- **Export dwords from documentation** — saves all references of a selected DWORD into a text file for analysis.
-
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
 
 ## Credits
-https://x.com/BEYONDPERF_LLG
+- [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
