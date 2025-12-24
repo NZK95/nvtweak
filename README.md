@@ -2,9 +2,9 @@
 [![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
 
 > ## Disclaimer
-> The author is not responsible for any possible damage caused to hardware as a result of using this project. <b>
-> This software does not guarantee any increase in performance and is intended for enthusiasts only. <b>
-> You use this program at your own risk. <b>
+> The author is not responsible for any possible damage caused to hardware as a result of using this project. <br>
+> This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
+> You use this program at your own risk. <br>
 
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`.  
 Most of them are **hidden** and cannot be modified without external tools.
