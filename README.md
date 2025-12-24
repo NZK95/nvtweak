@@ -62,4 +62,4 @@ If the parameter exists in the documentation, one of three outcomes is possible:
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
 
 ## Credits
-- [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
+[BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
