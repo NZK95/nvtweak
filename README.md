@@ -6,7 +6,7 @@
 > This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
 > You use this program at your own risk. <br>
 
-# Introduction
+## Introduction
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`. <br>
 Most of them are **hidden** and cannot be modified without external tools. <br>
 Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time. <br>
