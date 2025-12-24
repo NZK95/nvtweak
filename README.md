@@ -23,7 +23,6 @@ But others use **bitfields** and **bitmasks**, information about which comes fro
 Calculating a bitmask manually takes time. `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically.  
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently.
 
-
 > ### Important
 > In **nvlddmkm**, unlike **0000**, there are no bitfields — only simple DWORD parameters using the Enable/Disable format mentioned above.  
 > Still, some **0000** parameters can behave the same way.  
@@ -60,3 +59,6 @@ If the parameter exists in the documentation, one of three outcomes is possible:
 
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
+
+## Credits
+https://x.com/BEYONDPERF_LLG
