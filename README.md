@@ -54,7 +54,7 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
 <details>
 <summary>NVIDIA LEAK</summary>
-magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=...
+magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=integdev_gpu_drv.rar&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce
 </details>
 
 
