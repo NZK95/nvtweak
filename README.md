@@ -50,11 +50,11 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 - Manual value entry required
 - Use **Show Description** to view context (if available)
 
-## Troubleshooting
-If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
-
 ## Credits
 [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
+
+## Troubleshooting
+If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
