@@ -21,11 +21,11 @@ Even if you manage to find the names of those parameters (DWORD), there’s anot
 `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically. <br>
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently. <br>
 
-## Registry Location Differences
+### Registry Location Differences
 - **0000 branch**: Contains both simple flags and complex bitfield parameters
 - **nvlddmkm branch**: Contains only binary Enable/Disable parameters
 
-## Input Format
+### Input Format
 All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x00000001`).
 
 ## Features
