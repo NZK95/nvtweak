@@ -6,14 +6,14 @@ namespace nvtweak
     {
         private void ShowDescriptionButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NVIDIA.IsDwordNameEmpty() || NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName) == -1)
+            if (DWORDService.IsDwordNameEmpty() || DWORDService.GetDwordLineIndex(DWORDService.DWORDName) == -1)
             {
                 MessageBox.Show("Invalid data.", "Input Required", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
-            var description = NVIDIA.GetDescription(index);
+            var index = DWORDService.GetDwordLineIndex(DWORDService.DWORDName);
+            var description = DWORDService.GetDescription(index);
 
             Description_Textbox.Text = "Bottom Description:\n\n";
             foreach (var lineOfBottomDescription in description.bottomDescriptionLines)

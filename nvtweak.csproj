@@ -18,13 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="src\Services\BitmaskCalculatorService.cs" />
+    <None Include="UI\Buttons\SaveRegistryFile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="assets\fonts\JetBrainsMono-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="App.xaml" />
+    <Folder Include="Application\" />
   </ItemGroup>
 
 </Project>

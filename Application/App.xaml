@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:nvtweak"
-             StartupUri="src/UI/MainWindow.xaml">
+StartupUri="UI/MainWindow/MainWindow.xaml">
 
     <Application.Resources>
-        <FontFamily x:Key="JetBrainsMono-Regular.ttf">pack://application:,,,assets/fonts/#JetBrains-Mono Regular.ttf</FontFamily>
+        <FontFamily x:Key="JetBrainsMono">
+            pack://application:,,,/assets/fonts/#JetBrains Mono
+        </FontFamily>
 
         <Style TargetType="TreeViewItem">
             <Setter Property="Foreground" Value="White"/>

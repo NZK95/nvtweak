@@ -1,20 +1,7 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Microsoft.Win32;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
 
 namespace nvtweak
 {
@@ -81,14 +68,14 @@ namespace nvtweak
         {
             var valueToSet = SetAllToValueTextBox.Text;
 
-            if (!Misc.IsDesiredValueInAcceptedRange(valueToSet.ToLower())) return;
+            if (!DWORDValidator.IsDesiredValueInAcceptedRange(valueToSet.ToLower())) return;
 
             foreach (var item in DwordTreeView.Items)
             {
-                var bitRange = NVIDIA.ExtractBitRange(Convert.ToString(item));
+                var bitRange = DWORDService.ExtractBitRange(Convert.ToString(item));
 
                 if (!string.IsNullOrEmpty(bitRange))
-                    NVIDIA.ValuesWithBitRanges[bitRange] = valueToSet;
+                    DWORDService.ValuesWithBitRanges[bitRange] = valueToSet;
             }
 
             CalculateValueButton_Click(null, null);
@@ -97,10 +84,10 @@ namespace nvtweak
 
         private void DisplayDWORDMaxValue()
         {
-            if (NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName) != -1)
+            if (DWORDService.GetDwordLineIndex(DWORDService.DWORDName) != -1)
             {
-                var binaryMaxValue = BitmaskCalculator.GetMaxValue(NVIDIA.DWORDName);
-                MaxValueTextBox.Text = BitmaskCalculator.ConvertBinaryToHex(binaryMaxValue);
+                var binaryMaxValue = BitmaskCalculator.GetMaxValue(DWORDService.DWORDName);
+                MaxValueTextBox.Text = ConvertorService.ConvertBinaryToHex(binaryMaxValue);
             }
         }
     }

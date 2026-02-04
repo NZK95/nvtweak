@@ -7,18 +7,18 @@ namespace nvtweak
     {
         public void LoadOptionsAndSuboptionsInTreeView()
         {
-            if (!Misc.IsDWORDNameEmpty(NVIDIA.DWORDName)) return;
+            if (!DWORDValidator.IsDWORDNameEmpty(DWORDService.DWORDName)) return;
 
-            var index = NVIDIA.GetDwordLineIndex(NVIDIA.DWORDName);
+            var index = DWORDService.GetDwordLineIndex(DWORDService.DWORDName);
 
-            if (!Misc.IsDWORDNameFound(index)) return;
+            if (!DWORDValidator.IsDWORDNameFound(index)) return;
 
             DwordTreeView.Items.Clear();
 
-            var rootItem = new TreeViewItem { Header = NVIDIA.FileLines[index].Remove(0, 8), IsExpanded = false };
+            var rootItem = new TreeViewItem { Header = DWORDService.FileLines[index].Remove(0, 8), IsExpanded = false };
             DwordTreeView.Items.Add(rootItem);
 
-            var options = NVIDIA.ExtractOptions(index);
+            var options = DWORDService.ExtractOptions(index);
 
             if (options.Keys.Count is 0)
             {
@@ -34,12 +34,12 @@ namespace nvtweak
 
         private void ElaborateCaseWithNoOptionsFound(int index)
         {
-            var prefix = "#define " + NVIDIA.ExtractDwordDefinitionName(NVIDIA.FileLines[index]) + "_";
+            var prefix = "#define " + DWORDService.ExtractDwordDefinitionName(DWORDService.FileLines[index]) + "_";
             HashSet<string> printed = new();
 
-            for (int i = index; i < NVIDIA.FileLines.Length; i++)
+            for (int i = index; i < DWORDService.FileLines.Length; i++)
             {
-                var line = NVIDIA.FileLines[i];
+                var line = DWORDService.FileLines[i];
 
                 if (line.StartsWith(prefix))
                 {
@@ -75,9 +75,9 @@ namespace nvtweak
 
                     subCheckBoxInOptionKey.Checked += (s, e) =>
                     {
-                        string bitRange = NVIDIA.ExtractBitRange(Convert.ToString(subCheckBoxInOptionKey.Tag));
-                        string subOptionValue = NVIDIA.ExtractSubOptionValue(Convert.ToString(subCheckBoxInOptionKey.Content));
-                        NVIDIA.ValuesWithBitRanges[bitRange] = subOptionValue;
+                        string bitRange = DWORDService.ExtractBitRange(Convert.ToString(subCheckBoxInOptionKey.Tag));
+                        string subOptionValue = DWORDService.ExtractSubOptionValue(Convert.ToString(subCheckBoxInOptionKey.Content));
+                        DWORDService.ValuesWithBitRanges[bitRange] = subOptionValue;
 
                         foreach (TreeViewItem siblingItem in treeViewItemOptionKey.Items)
                         {
