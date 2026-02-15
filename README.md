@@ -8,9 +8,10 @@
 
 > This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
 
+> The NVIDIA documentation is often incomplete and many parameters are not described properly. <br>
+
 > You use this program at your own risk. <br>
 
-> The NVIDIA documentation is often incomplete and many parameters are not described properly. <br>
 
 ## Requirements
 - Windows x64
