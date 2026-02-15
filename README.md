@@ -3,10 +3,13 @@
 
 ![](https://github.com/NZK95/nvtweak/blob/master/assets/images/nvtweak%20%231.png)
 
-> ### <mark>Disclaimer</mark>
+> ### Disclaimer
 > The author is not responsible for any possible damage caused to hardware as a result of using this project. <br>
+
 > This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
+
 > You use this program at your own risk. <br>
+
 > The NVIDIA documentation is often incomplete and many parameters are not described properly. <br>
 
 ## Requirements
