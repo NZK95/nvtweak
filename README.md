@@ -20,7 +20,7 @@
 
 ## Introduction
 NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`. <br>
-Most of them are **hidden** and cannot be modified without external tools. <br>
+Most of them are **hidden** and cannot be seen without external tools (WPA/MXA/ProcMon).<br>
 Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time. 
 `nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically. <br>
 It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently. <br>
