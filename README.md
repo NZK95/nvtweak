@@ -44,7 +44,7 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 
 
 ## Usage
-1. Enter the DWORD parameter name in the search field
+1. Enter the DWORD parameter name (If hidden extract them with WPA/MXA/PROCMON etc..) in the search field
 2. Click **Search** to query the documentation database
 3. Interpret results based on parameter type:
 
