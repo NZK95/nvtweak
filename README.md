@@ -37,7 +37,7 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 | **Automated Value Calculation**                   | Automatically calculate values based on bitfield specifications.   |
 | **Registry Integration with Direct Write**        | Directly write to registry with integration capabilities.         |
 | **Documentation Browser for Parameter Descriptions** | Allows browsing of documentation related to parameter descriptions.|
-| **Reverse Engineering**                           | Reconstruct bitfield configuration from existing values.          |
+| **Reverse**                           | Reconstruct bitfield configuration from existing values.          |
 | **Export Functionality**                          | Generate .reg files for batch deployment.                         |
 | **DWORD Analysis**                                | Extract all references to specific parameters in DWORD format.    |
 
