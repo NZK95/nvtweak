@@ -12,7 +12,6 @@
 
 > You use this program at your own risk. <br>
 
-
 ## Requirements
 - Windows x64
 - Administrator privileges
@@ -61,12 +60,14 @@ All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x0000
 - Manual value entry required
 - Use **Show Description** to view context (if available)
 
+## Useful Links
+NVIDIA 2022 LEAK <br>
+```bat
+magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=integdev_gpu_drv.rar&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce
+```
+
 ## Credits
 [BEYONDPERFORMANCE](https://x.com/BEYONDPERF_LLG)
-<details>
-<summary>NVIDIA LEAK</summary>
-magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=integdev_gpu_drv.rar&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce
-</details>
 
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
