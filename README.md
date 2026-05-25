@@ -1,7 +1,8 @@
 <h1>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nvidia/nvidia-original.svg" width="40" align="center"/>
+  <img src="https://cdn-icons-png.flaticon.com/512/888/888866.png" width="40" align="center"/>
   nvtweak
 </h1>
+
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/NZK95/nvtweak)
 [![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
 ![GitHub Stars](https://img.shields.io/github/stars/NZK95/nvtweak)
