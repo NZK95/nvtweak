@@ -1,22 +1,34 @@
+<div align="center">
+
 <h1>
   <img src="https://cdn-icons-png.flaticon.com/512/888/888866.png" width="30" align="center"/>
   nvtweak
 </h1>
 
-![GitHub Last Commit](https://img.shields.io/github/last-commit/NZK95/nvtweak)
-[![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
-![GitHub Stars](https://img.shields.io/github/stars/NZK95/nvtweak)
+*A tool for tweaking hidden NVIDIA driver settings.*
 
-![](https://github.com/NZK95/nvtweak/blob/master/assets/images/nvtweak%20%231.png)
+![GitHub Last Commit](https://img.shields.io/github/last-commit/NZK95/nvtweak?style=flat-square)
+[![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total?style=flat-square&color=brightgreen)](https://github.com/NZK95/nvtweak/releases)
+![GitHub Stars](https://img.shields.io/github/stars/NZK95/nvtweak?style=flat-square)
+![GitHub Issues](https://img.shields.io/github/issues/NZK95/nvtweak?style=flat-square)
+![GitHub License](https://img.shields.io/github/license/NZK95/nvtweak?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows-blue?style=flat-square&logo=windows)
+![NVIDIA](https://img.shields.io/badge/NVIDIA-GPU-76B900?style=flat-square&logo=nvidia&logoColor=white)
 
-> ### Disclaimer
-> The author is not responsible for any possible damage caused to hardware as a result of using this project. <br>
+<img src="https://github.com/NZK95/nvtweak/blob/master/assets/images/nvtweak%20%231.png" width="800"/>
 
-> This software does not guarantee any increase in performance and is intended for enthusiasts only. <br>
+</div>
 
-> The NVIDIA documentation is often incomplete and many parameters are not described properly. <br>
+<br>
 
-> You use this program at your own risk. <br>
+> [!WARNING]
+> The author is not responsible for any possible damage caused to hardware as a result of using this project.
+>
+> This software does not guarantee any increase in performance and is intended for enthusiasts only.
+>
+> The NVIDIA documentation is often incomplete and many parameters are not described properly.
+>
+> You use this program at your own risk.
 
 ## Requirements
 - Windows x64
