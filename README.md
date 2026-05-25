@@ -1,5 +1,7 @@
 # nvtweak
 [![Downloads](https://img.shields.io/github/downloads/NZK95/nvtweak/total.svg)](https://github.com/NZK95/nvtweak/releases)
+![GitHub stars](https://img.shields.io/github/stars/USER/REPO)
+![GitHub last commit](https://img.shields.io/github/last-commit/USER/REPO)
 
 ![](https://github.com/NZK95/nvtweak/blob/master/assets/images/nvtweak%20%231.png)
 
