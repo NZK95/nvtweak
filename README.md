@@ -1,5 +1,5 @@
 <h1>
-  <img src="https://cdn-icons-png.flaticon.com/512/888/888866.png" width="40" align="center"/>
+  <img src="https://cdn-icons-png.flaticon.com/512/888/888866.png" width="30" align="center"/>
   nvtweak
 </h1>
 
