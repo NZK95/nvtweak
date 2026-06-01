@@ -21,6 +21,7 @@
 
 <br>
 
+## Disclaimer
 > [!WARNING]
 > The author is not responsible for any possible damage caused to hardware as a result of using this project.
 >
@@ -46,11 +47,12 @@
 - Last version of **nvtweak** from [`releases`](https://github.com/NZK95/nvtweak/releases)
 
 ## Introduction
-NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm`. 
-Most of them are **hidden** and cannot be seen without external tools (WPA/MXA/ProcMon).
-Even if you manage to find the names of those parameters (DWORD), there’s another problem — figuring out the correct value to set. It takes time. 
-`nvtweak` automates this by parsing the documentation and generating correct DWORD values automatically. 
-It also provides a set of utilities for browsing NVIDIA docs and handling DWORDs efficiently. 
+NVIDIA GPU drivers contain a huge number of parameters stored in the Windows registry — usually under either `0000` or `nvlddmkm` path.
+Most of them are **hidden** and cannot be seen or read without external tools (<code>WPA/MXA/ProcMon</code>).
+Even if you find the names of those parameters, there’s another problem — figuring out the correct value to set, and without the documentation they are useless.
+You can use the **Leaked NVIDIA Documentation 2022** to calculate value manually, but it takes time and is annoying.
+`nvtweak` automates this by parsing the documentation and generating correct values for parameters automatically. 
+It also provides a set of utilities for browsing NVIDIA docs and handling registry DWORDs efficiently. 
 
 ### Registry Location Differences
 - **0000 branch**: Contains both simple flags and complex bitfield parameters
