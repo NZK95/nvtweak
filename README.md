@@ -55,8 +55,8 @@ You can use the **Leaked NVIDIA Documentation 2022** to calculate value manually
 It also provides a set of utilities for browsing NVIDIA docs and handling registry DWORDs efficiently. 
 
 ### Registry Location Differences
-- **0000 branch**: Contains both simple flags and complex bitfield parameters
-- **nvlddmkm branch**: Contains only binary Enable/Disable parameters
+- **0000 branch**: Contains simple flags and complex bitfield parameters
+- **nvlddmkm branch**: Contains only binary <code>Enable/Disable</code> parameters
 
 ### Input Format
 All values must be entered in hexadecimal format with `0x` prefix (e.g., `0x00000001`).
@@ -103,5 +103,7 @@ magnet:?xt=urn:btih:DC718539145BDE27DDDB5E94C67949E6D1C8513C&dn=integdev_gpu_drv
 ## Troubleshooting
 If you encounter bugs or unexpected behavior, please report them through the [issue tracker](https://github.com/NZK95/nvtweak/issues).
 
+> [!NOTE]
+> Some parameters are very experimental and can break the video driver, cause BSOD or other problems, so I always recommend storing the registry backup and logging all changed settings, if you still encounter this problem, just boot into Windows using Safe Mode and delete the setting that causes problems
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
